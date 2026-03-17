@@ -53,6 +53,14 @@ export class GameEngine {
     return this.storage.getGameState(charId);
   }
 
+  getAllCharacters(): Character[] {
+    return this.storage.getAllCharacters();
+  }
+
+  getCharacterGameState(characterId: string): GameState | null {
+    return this.storage.getGameState(characterId);
+  }
+
   // ─── Status ───
   getStatus(authKey: string): Character | null {
     return this.getCharacterByAuth(authKey);

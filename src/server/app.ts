@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { GameEngine } from './game/engine';
 import { Storage } from './storage/storage';
 import { MapAdapterManager } from './map/adapter';
@@ -9,6 +10,18 @@ import { ApiResponse } from '../shared/types';
 export function createApp(dbPath?: string) {
   const app = express();
   app.use(express.json());
+
+  // CORS for web frontend
+  app.use((_req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, x-auth-key');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    if (_req.method === 'OPTIONS') { res.sendStatus(204); return; }
+    next();
+  });
+
+  // Serve static web frontend
+  app.use(express.static(path.join(__dirname, '../../web')));
 
   // Initialize subsystems
   const storage = new Storage(dbPath);
@@ -47,6 +60,22 @@ export function createApp(dbPath?: string) {
 
   app.get('/api/health', (_req, res) => {
     res.json({ success: true, data: { status: 'ok', version: '1.0.0' } } satisfies ApiResponse);
+  });
+
+  // Public: list all characters (for leaderboard)
+  app.get('/api/characters', (_req, res) => {
+    const characters = engine.getAllCharacters();
+    res.json({ success: true, data: characters } satisfies ApiResponse);
+  });
+
+  // Public: get a character's full game state by ID
+  app.get('/api/characters/:id', (req, res) => {
+    const state = engine.getCharacterGameState(req.params.id);
+    if (!state) {
+      res.status(404).json({ success: false, error: 'Character not found' } satisfies ApiResponse);
+      return;
+    }
+    res.json({ success: true, data: state } satisfies ApiResponse);
   });
 
   // ─── Protected Routes ───

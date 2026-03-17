@@ -277,6 +277,18 @@ export class Storage {
     };
   }
 
+  getAllCharacters(): Character[] {
+    const rows = this.db.prepare('SELECT * FROM characters ORDER BY updated_at DESC').all() as any[];
+    return rows.map(row => ({
+      id: row.id,
+      name: row.name,
+      stats: JSON.parse(row.stats),
+      currentLocation: JSON.parse(row.current_location),
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    }));
+  }
+
   updateCharacter(character: Character): void {
     character.updatedAt = new Date().toISOString();
     this.db.prepare('UPDATE characters SET name = ?, stats = ?, current_location = ?, updated_at = ? WHERE id = ?')
