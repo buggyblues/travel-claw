@@ -1,0 +1,46 @@
+{
+  "name": "@shadowob/travel-claw",
+  "version": "1.0.0",
+  "description": "Travel Claw - A CLI game where you raise a traveling lobster",
+  "main": "dist/server/index.js",
+  "bin": {
+    "travel-claw": "dist/client/index.js",
+    "claw": "dist/client/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev:server": "tsx src/server/index.ts",
+    "dev:client": "tsx src/client/index.ts",
+    "claw": "tsx src/client/index.ts",
+    "server": "tsx src/server/index.ts",
+    "test": "vitest run",
+    "test:e2e": "vitest run tests/e2e"
+  },
+  "keywords": ["cli", "game", "travel", "lobster"],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3", "esbuild"]
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "express": "^5.2.1",
+    "nanoid": "^3.3.11",
+    "ora": "^9.3.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "@types/supertest": "^7.2.0",
+    "@types/uuid": "^11.0.0",
+    "supertest": "^7.2.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
