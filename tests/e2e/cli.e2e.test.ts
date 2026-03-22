@@ -486,6 +486,9 @@ describe('Travel Claw CLI E2E Tests', () => {
       await api.shopBuy('sandwich');
       await api.shopBuy('lantern');
 
+      // Reset fatigue from previous scenario steps so this flow is deterministic
+      await api.rest();
+
       // 2. Check backpack
       let bpRes = await api.backpack();
       const bp = bpRes.data as any[];

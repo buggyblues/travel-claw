@@ -1,10 +1,10 @@
-import { Coordinates, Landmark, Location, MapProvider } from '../../shared/types';
+import type { MapProvider } from '../../shared/types';
 
 /**
  * Map adapter interface - implements the Adapter pattern
  * to allow switching between different map providers.
  */
-export { MapProvider };
+export type { MapProvider };
 
 export class MapAdapterManager {
   private adapters: Map<string, MapProvider> = new Map();

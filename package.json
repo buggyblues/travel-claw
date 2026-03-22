@@ -9,6 +9,9 @@
   },
   "scripts": {
     "build": "tsc",
+    "build:web": "npm --prefix webapp run build",
+    "dev:web": "npm --prefix webapp run dev",
+    "play:web": "npm run build:web && npx tsx src/server/index.ts",
     "dev:server": "tsx src/server/index.ts",
     "dev:client": "tsx src/client/index.ts",
     "claw": "tsx src/client/index.ts",

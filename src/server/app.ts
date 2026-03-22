@@ -7,7 +7,14 @@ import { GoogleMapsAdapter } from './map/google.adapter';
 import { MapboxAdapter } from './map/mapbox.adapter';
 import { ApiResponse } from '../shared/types';
 
-export function createApp(dbPath?: string) {
+type CreateAppResult = {
+  app: express.Express;
+  storage: Storage;
+  engine: GameEngine;
+  mapManager: MapAdapterManager;
+};
+
+export function createApp(dbPath?: string): CreateAppResult {
   const app = express();
   app.use(express.json());
 
